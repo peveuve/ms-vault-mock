@@ -1,8 +1,14 @@
 {
   "name": "ms-vault-mock",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "author": "Paul-Emile Veuve",
+  "contributors": [
+    {
+      "email": "franck.mahieu59@gmail.com",
+      "name": "Franck Mahieu"
+    }
+  ],
   "description": "Azure Key Vault mock server",
   "keywords": [
     "azure",
@@ -36,10 +42,27 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
     "sinon": "^10.0.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha \"test/**/*.spec.js\"",
+    "test:cov": "nyc npm run test",
     "lint": "./node_modules/.bin/eslint ms-vault-mock.js \"lib/**\""
+  },
+  "nyc": {
+    "all": true,
+    "check-coverage": true,
+    "branches": 0.52,
+    "lines": 2.08,
+    "functions": 2.44,
+    "statements": 0.73,
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "exclude": [
+      "**/*.spec.js"
+    ]
   }
 }
