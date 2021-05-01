@@ -1,1 +1,92 @@
-[{"name":"db-password","versions":[{"value":"pass1","attributes":{"enabled":true,"created":1619366691187,"updated":1619366691187},"id":"http://localhost/secrets/db-password/8609e648-095c-49e8-8060-232dd43e7624"}]},{"name":"storage-password","versions":[{"value":"storepass1","attributes":{"created":1619366963814,"updated":1619366963814},"id":"http://localhost/secrets/storage-password/fd23770a-4408-4f94-afad-c27086df1a74"},{"value":"storepass1","attributes":{"created":1619367282155,"updated":1619367282155},"id":"http://localhost/secrets/storage-password/5e751387-a179-4c9c-8258-12ee25fb20f5"}]}]
+[
+  {
+    "name": "db-password",
+    "versions": [
+      {
+        "value": "pass1",
+        "attributes": {
+          "enabled": true,
+          "created": 1619366691187,
+          "updated": 1619366691187
+        },
+        "id": "http://localhost/secrets/db-password/8609e648-095c-49e8-8060-232dd43e7624"
+      }
+    ]
+  },
+  {
+    "name": "storage-password",
+    "versions": [
+      {
+        "value": "storepass1",
+        "attributes": {
+          "created": 1619867549723,
+          "updated": 1619867549723
+        },
+        "id": "http://localhost/secrets/storage-password/69649096-0512-43a1-8ca0-1d886874833c"
+      },
+      {
+        "value": "storepass2",
+        "attributes": {
+          "created": 1619867782393,
+          "updated": 1619867782393
+        },
+        "id": "http://localhost/secrets/storage-password/2494f0a4-ca9e-45b6-8374-592089561fc7"
+      }
+    ]
+  },
+  {
+    "name": "smtp-password",
+    "versions": [
+      {
+        "value": "smtppass1",
+        "contentType": "plainText",
+        "attributes": {
+          "enabled": true,
+          "exp": 54545454545454,
+          "nbf": 4544544545,
+          "recoverableDays": 14,
+          "recoveryLevel": "Recoverable+Purgeable",
+          "created": 1619884316526,
+          "updated": 1619884316526
+        },
+        "id": "http://localhost/secrets/smtp-password/947defcb-4ed3-443f-80ba-7f87cdc5c0ba"
+      },
+      {
+        "value": "smtppass2",
+        "contentType": "plainText",
+        "attributes": {
+          "enabled": true,
+          "exp": 54545454545454,
+          "nbf": 4544544545,
+          "recoverableDays": 14,
+          "recoveryLevel": "Recoverable+Purgeable",
+          "created": 1619884366260,
+          "updated": 1619884366260
+        },
+        "id": "http://localhost/secrets/smtp-password/0d9ca2f0-82e7-4fa7-a6dd-a17e016517a7"
+      },
+      {
+        "value": "smtppass3",
+        "contentType": "plainText",
+        "attributes": {
+          "enabled": true,
+          "exp": 1619884384708,
+          "nbf": 1619884384708,
+          "recoverableDays": 14,
+          "recoveryLevel": "Recoverable+Purgeable",
+          "created": 1619884384708,
+          "updated": 1619884384708
+        },
+        "id": "http://localhost/secrets/smtp-password/b5f7d238-50f8-4303-ac24-00a68505c9d9"
+      },
+      {
+        "value": "smtppass4",
+        "contentType": "plainText",
+        "attributes": {
+          "enabled": false
+        },
+        "id": "http://localhost/secrets/smtp-password/0e3ea058-34c3-4373-b5ff-2f3e88b584c7"
+      }
+    ]
+  }
+]

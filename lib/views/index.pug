@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title ms-vault-mock
+  body
+    h2 Secrets 
+    table(style={ border: '1px solid gray' })
+      thead 
+        tr(style={ 'background-color': '#BBBBBB' })
+          th Name 
+          th Version
+          th Value
+      tbody 
+        each secret in secrets
+          each version, index in secret.versions
+            tr
+              if index === 0
+                td(
+                  rowspan= secret.versions.length
+                  style={ 'vertical-align': 'top' }
+                )= secret.name 
+              td= version.id
+              td= version.value
