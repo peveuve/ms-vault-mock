@@ -1,0 +1,30 @@
+[
+  {
+    "name": "secret1",
+    "versions": [
+      {
+        "id": "id1",
+        "value": "value1",
+        "attributes": {
+          "enabled": true,
+          "created": 1619366691187,
+          "updated": 1619366691187
+        }
+      }
+    ]
+  },
+  {
+    "name": "secret2",
+    "versions": [
+      {
+        "id": "id2",
+        "value": "value2",
+        "attributes": {
+          "enabled": false,
+          "created": 1619366691188,
+          "updated": 1619366691188
+        }
+      }
+    ]
+  }
+]
