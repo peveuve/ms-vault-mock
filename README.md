@@ -25,6 +25,13 @@ This directory can be changed with the option *--vault_dir*.
 For more details about the various options, type:
 > ms-vault-mock --help
 
-## Reference
+## Implementation
 
-Only a subset of the [Azure Key Vault API](https://docs.microsoft.com/en-us/rest/api/keyvault/) are implemented so far.
+Only a subset of the [Azure Key Vault API](https://docs.microsoft.com/en-us/rest/api/keyvault/) is implemented so far:
+ - GET /secrets
+ - GET /secrets/{name}
+ - PUT /secrets/{name}
+ - DELETE /secrets/{name}
+ - GET /secrets/{name}/{version}
+ - PATCH /secrets/{name}/{version}
+

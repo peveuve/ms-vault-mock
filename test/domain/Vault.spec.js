@@ -34,6 +34,22 @@ describe('Vault', function () {
       secrets.should.not.equal(vaultSecrets)
       secrets[0].should.not.equal(vaultSecrets[0])
       secrets.should.deep.equal(vaultSecrets.slice(0, 1))
+      secrets.nextIndex.should.equal(1)
+    })
+
+    it('should return a deep clone of a part of the secrets from the vault starting from the given index', function () {
+      // Given
+      const vault = new Vault(vaultSecrets)
+
+      // When
+      const secrets = vault.getSecrets(1, 1)
+
+      // Then
+      secrets.length.should.equal(1)
+      secrets.should.not.equal(vaultSecrets)
+      secrets[0].should.not.equal(vaultSecrets[1])
+      secrets.should.deep.equal(vaultSecrets.slice(1, 2))
+      should.not.exist(secrets.nextIndex)
     })
   })
 
