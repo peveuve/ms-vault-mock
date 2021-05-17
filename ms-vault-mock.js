@@ -3,7 +3,7 @@
 const path = require('path')
 const fs = require('fs/promises')
 const HttpServer = require('./lib/httpServer')
-const VaultFileClient = require('./lib/persistence/vaultFileClient')
+const VaultFileClient = require('./lib/persistence/VaultFileClient')
 
 let httpPort = 10000
 let httpsPort = 10001
