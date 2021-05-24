@@ -284,4 +284,32 @@ describe('Vault', function () {
       }
     })
   })
+
+  describe('setSecrets', function () {
+    it('should create or update the secrets', function () {
+      // Given
+      const newSecrets = {
+        secret1: 'value11',
+        secret2: 'value2',
+        secret3: 'value3'
+      }
+      const vault = new Vault(JSON.parse(JSON.stringify(vaultSecrets)))
+
+      // When
+      vault.setSecrets(newSecrets)
+
+      // Then
+      const newVaultSecrets = vault.getSecrets()
+      newVaultSecrets.should.have.lengthOf(3)
+      newVaultSecrets[0].versions.should.have.lengthOf(2)
+      newVaultSecrets[0].versions[0].value.should.equal('value1')
+      newVaultSecrets[0].versions[1].value.should.equal('value11')
+      newVaultSecrets[1].name.should.equal('secret2')
+      newVaultSecrets[1].versions.should.have.lengthOf(1)
+      newVaultSecrets[1].versions[0].value.should.equal('value2')
+      newVaultSecrets[2].name.should.equal('secret3')
+      newVaultSecrets[2].versions.should.have.lengthOf(1)
+      newVaultSecrets[2].versions[0].value.should.equal('value3')
+    })
+  })
 })

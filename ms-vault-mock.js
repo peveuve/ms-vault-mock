@@ -9,15 +9,17 @@ let httpPort = 10000
 let httpsPort = 10001
 let vaultDir = __dirname
 let certificate, privateKey
+let preloadFile
 const vaultFile = 'vault.json'
 const encoding = 'utf8'
 
 const usage = `Usage: node ${path.basename(__filename)} [options...]
 --http_port     HTTP port number (default ${httpPort})
 --https_port    HTTPS port number (default ${httpsPort})
---certificate   certificate used to start HTTPS server
---private_key   private key used to start HTTPS server
+--certificate   certificate used to start HTTPS server (default none)
+--private_key   private key used to start HTTPS server (default none)
 --vault_dir     directory where vault file will be saved (default ${vaultDir})
+--preload       dataset to preload in the vault before starting (default none)
 --help          display this message
 
 Azure key vault client demands HTTPS enabled, which requires
@@ -82,6 +84,9 @@ async function bootstrap () {
           case '--vault_dir':
             expect = 'vault_dir'
             break
+          case '--preload':
+            expect = 'preload_file'
+            break
           default:
             console.error(`Unknown option ${currentArg} ignored`)
             console.log(usage)
@@ -107,11 +112,30 @@ async function bootstrap () {
         vaultDir = await checkDirectory(currentArg)
         expect = 'option'
         break
+      case 'preload_file':
+        preloadFile = await checkFile(currentArg)
+        expect = 'option'
+        break
     }
   }
 
+  if (!vaultDir) {
+    console.error('can not load the vault')
+    return
+  }
   const vaultPath = path.join(vaultDir, vaultFile)
-  VaultFileClient.getInstance(vaultPath, encoding)
+  const vaultFileClient = VaultFileClient.getInstance(vaultPath, encoding)
+
+  if (preloadFile) {
+    try {
+      const stringifiedSecrets = await fs.readFile(preloadFile, 'utf8')
+      const secretsToPreload = JSON.parse(stringifiedSecrets)
+      vaultFileClient.getVault().setSecrets(secretsToPreload)
+    } catch (error) {
+      console.error(`can not preload the dataset ${preloadFile}: ${error.message}`, error.stack)
+      return
+    }
+  }
 
   const httpServer = new HttpServer(httpPort, httpsPort, certificate, privateKey)
   httpServer.start()
