@@ -30,7 +30,7 @@ describe('appController', function () {
       vaultStub.getSecrets.resetHistory()
     })
 
-    it('sould return the root page with the secrets in the response', function () {
+    it('should return the root page with the secrets in the response', function () {
       // Given
       const req = {}
       const secrets = [
