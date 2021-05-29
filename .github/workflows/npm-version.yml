@@ -1,5 +1,5 @@
 # Release a new version in Git
-name: Create ms-vault-mock release
+name: ms-vault-mock-Release
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -10,8 +10,9 @@ on:
         description: 'Type of release (major, minor, patch)'
         required: true
         default: 'minor'
-
+jobs:
   release:
+    name: release new version
     runs-on: ubuntu-latest
     steps:
       - name: checkout sources
