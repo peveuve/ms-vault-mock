@@ -1,5 +1,5 @@
 # Release a new version in Git
-name: ms-vault-mock-Release
+name: Release
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -23,6 +23,8 @@ jobs:
           node-version: 16
       # create a new release of the given type
       - name: create release
+        run: git config --global user.name 'peveuve'
+        run: git config --global user.email 'peveuve@users.noreply.github.com'
         run: npm version ${{github.event.inputs.releaseType}}
       # push the commit and tag
       - name: push release
