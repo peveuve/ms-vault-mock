@@ -1,30 +1,71 @@
-[
-  {
-    "name": "secret1",
-    "versions": [
-      {
-        "id": "id1",
-        "value": "value1",
-        "attributes": {
-          "enabled": true,
-          "created": 1619366691187,
-          "updated": 1619366691187
+{
+  "secrets": [
+    {
+      "name": "secret1",
+      "versions": [
+        {
+          "id": "id1",
+          "value": "value1",
+          "attributes": {
+            "enabled": true,
+            "created": 1619366691187,
+            "updated": 1619366691187
+          }
         }
-      }
-    ]
-  },
-  {
-    "name": "secret2",
-    "versions": [
-      {
-        "id": "id2",
-        "value": "value2",
-        "attributes": {
-          "enabled": false,
-          "created": 1619366691188,
-          "updated": 1619366691188
+      ]
+    },
+    {
+      "name": "secret2",
+      "versions": [
+        {
+          "id": "id2",
+          "value": "value2",
+          "attributes": {
+            "enabled": false,
+            "created": 1619366691188,
+            "updated": 1619366691188
+          }
         }
-      }
-    ]
-  }
-]
+      ]
+    }
+  ],
+  "keys": [
+    {
+      "name": "key1",
+      "versions": [
+        {
+          "id": "id1",
+          "key": "pem1",
+          "operations": [
+            "encrypt",
+            "decrypt"
+          ],
+          "attributes": {
+            "created": 1619366691188,
+            "updated": 1619366691188
+          },
+          "tags": {
+            "tag1": "value1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "key2",
+      "versions": [
+        {
+          "id": "id2",
+          "key": "pem2",
+          "operations": [
+            "sign",
+            "verify"
+          ],
+          "attributes": {
+            "enabled": false
+          },
+          "tags": {}
+        }
+      ]
+    }
+  ]
+}

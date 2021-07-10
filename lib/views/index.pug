@@ -24,3 +24,22 @@ html(lang="en")
                 )= secret.name 
               td= version.id
               td= version.value
+
+    h2 Keys 
+    table(style={ border: '1px solid gray' })
+      thead 
+        tr(style={ 'background-color': '#BBBBBB' })
+          th Name 
+          th Version
+          th Key
+      tbody 
+        each key in keys
+          each version, index in key.versions
+            tr
+              if index === 0
+                td(
+                  rowspan= key.versions.length
+                  style={ 'vertical-align': 'top' }
+                )= key.name 
+              td= version.id
+              td= version.key

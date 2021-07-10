@@ -40,8 +40,6 @@ describe('secretController', function () {
       // Given
       const req = {
         query: {
-          maxresults: '20',
-          skiptoken: '10',
           'api-version': '1.6'
         }
       }
@@ -64,7 +62,7 @@ describe('secretController', function () {
 
       // Then
       vaultFileClient.getVault.should.be.calledOnceWithExactly()
-      vaultStub.getSecrets.should.be.calledOnceWithExactly(20, 10)
+      vaultStub.getSecrets.should.be.calledOnceWithExactly(25, 0)
       const expectedResponse = {
         value: [
           {
@@ -80,7 +78,10 @@ describe('secretController', function () {
       const req = {
         protocol: 'https',
         hostname: 'hostname',
-        query: {}
+        query: {
+          maxresults: '20',
+          skiptoken: '10'
+        }
       }
       const secrets = [
         {
@@ -100,7 +101,7 @@ describe('secretController', function () {
           ]
         }
       ]
-      secrets.nextIndex = 50
+      secrets.nextIndex = 30
       vaultStub.getSecrets.returns(secrets)
 
       // When
@@ -108,14 +109,14 @@ describe('secretController', function () {
 
       // Then
       vaultFileClient.getVault.should.be.calledOnceWithExactly()
-      vaultStub.getSecrets.should.be.calledOnceWithExactly(25, 0)
+      vaultStub.getSecrets.should.be.calledOnceWithExactly(20, 10)
       const expectedResponse = {
         value: [
           {
             attributes: { created: 2 }
           }
         ],
-        nextLink: 'https://hostname/secrets?api-version=7.1&$skiptoken=50&maxresults=25'
+        nextLink: 'https://hostname/secrets?api-version=7.1&$skiptoken=30&maxresults=20'
       }
       res.json.should.be.calledOnceWithExactly(expectedResponse)
     })

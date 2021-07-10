@@ -41,7 +41,8 @@ describe('VaultFileClient', function () {
       // Then
       fs.readFileSync.should.be.calledOnceWithExactly(filePath, fileEncoding)
       vault.should.be.instanceOf(Vault)
-      vault.getSecrets().should.deep.equal(vaultContent)
+      vault.getSecrets().should.deep.equal(vaultContent.secrets)
+      vault.getKeys().should.deep.equal(vaultContent.keys)
     })
   })
 
@@ -94,6 +95,7 @@ describe('VaultFileClient', function () {
       fs.readFileSync.should.be.calledOnce()
       vault.should.be.instanceOf(Vault)
       vault.getSecrets().should.have.lengthOf(2)
+      vault.getKeys().should.have.lengthOf(2)
     })
 
     it('should return an empty vault if the file does not exist', function () {
@@ -110,6 +112,7 @@ describe('VaultFileClient', function () {
       fs.readFileSync.should.not.be.called()
       vault.should.be.instanceOf(Vault)
       vault.getSecrets().should.have.lengthOf(0)
+      vault.getKeys().should.have.lengthOf(0)
     })
 
     it('should return the preloaded vault', function () {
@@ -124,6 +127,7 @@ describe('VaultFileClient', function () {
       fs.readFileSync.should.not.be.called()
       vault.should.be.instanceOf(Vault)
       vault.getSecrets().should.have.lengthOf(0)
+      vault.getKeys().should.have.lengthOf(0)
     })
 
     it('should save the vault if the vault changed event is triggered', function () {
@@ -136,7 +140,7 @@ describe('VaultFileClient', function () {
       vault.emit('changed', vault)
 
       // Then
-      fs.writeFileSync.should.be.calledOnceWithExactly(filePath, '[]', fileEncoding)
+      fs.writeFileSync.should.be.calledOnceWithExactly(filePath, sinon.match.string, fileEncoding)
     })
   })
 })
