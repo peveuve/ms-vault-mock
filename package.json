@@ -51,7 +51,8 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha \"test/**/*.spec.js\"",
     "test:cov": "nyc npm test",
-    "lint": "./node_modules/.bin/eslint \"**/*.js\""
+    "lint": "./node_modules/.bin/eslint \"**/*.js\"",
+    "start": "node ms-vault-mock.js --certificate ~/vault-server.crt --private_key ~/vault-server.key --vault_dir ~"
   },
   "nyc": {
     "all": true,

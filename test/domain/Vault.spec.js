@@ -3,52 +3,52 @@ const { assert } = require('chai')
 const sinon = require('sinon')
 const KeyVaultError = require('../../lib/domain/KeyVaultError')
 const Vault = require('../../lib/domain/Vault')
-const vaultSecrets = require('./vault.json')
+const vaultContent = require('./vault.json')
 
 describe('Vault', function () {
   describe('getSecrets', function () {
     it('should return a deep clone of all the secrets from the vault', function () {
       // Given
-      const vault = new Vault(vaultSecrets)
+      const vault = new Vault(vaultContent)
 
       // When
       const secrets = vault.getSecrets()
 
       // Then
-      secrets.length.should.equal(vaultSecrets.length)
-      secrets.should.not.equal(vaultSecrets)
-      secrets[0].should.not.equal(vaultSecrets[0])
-      secrets[1].should.not.equal(vaultSecrets[1])
-      secrets.should.deep.equal(vaultSecrets)
+      secrets.length.should.equal(2)
+      secrets.should.not.equal(vaultContent.secrets)
+      secrets[0].should.not.equal(vaultContent.secrets[0])
+      secrets[1].should.not.equal(vaultContent.secrets[1])
+      secrets.should.deep.equal(vaultContent.secrets)
     })
 
     it('should return a deep clone of a part of the secrets from the vault', function () {
       // Given
-      const vault = new Vault(vaultSecrets)
+      const vault = new Vault(vaultContent)
 
       // When
       const secrets = vault.getSecrets(1)
 
       // Then
       secrets.length.should.equal(1)
-      secrets.should.not.equal(vaultSecrets)
-      secrets[0].should.not.equal(vaultSecrets[0])
-      secrets.should.deep.equal(vaultSecrets.slice(0, 1))
+      secrets.should.not.equal(vaultContent.secrets)
+      secrets[0].should.not.equal(vaultContent.secrets[0])
+      secrets.should.deep.equal(vaultContent.secrets.slice(0, 1))
       secrets.nextIndex.should.equal(1)
     })
 
     it('should return a deep clone of a part of the secrets from the vault starting from the given index', function () {
       // Given
-      const vault = new Vault(vaultSecrets)
+      const vault = new Vault(vaultContent)
 
       // When
       const secrets = vault.getSecrets(1, 1)
 
       // Then
       secrets.length.should.equal(1)
-      secrets.should.not.equal(vaultSecrets)
-      secrets[0].should.not.equal(vaultSecrets[1])
-      secrets.should.deep.equal(vaultSecrets.slice(1, 2))
+      secrets.should.not.equal(vaultContent.secrets)
+      secrets[0].should.not.equal(vaultContent.secrets[1])
+      secrets.should.deep.equal(vaultContent.secrets.slice(1, 2))
       should.not.exist(secrets.nextIndex)
     })
   })
@@ -56,19 +56,19 @@ describe('Vault', function () {
   describe('getSecret', function () {
     it('should return a deep clone secret from the vault', function () {
       // Given
-      const vault = new Vault(vaultSecrets)
+      const vault = new Vault(vaultContent)
 
       // When
       const secret = vault.getSecret('secret1')
 
       // Then
-      secret.should.not.equal(vaultSecrets[0])
-      secret.should.deep.equal(vaultSecrets[0])
+      secret.should.not.equal(vaultContent.secrets[0])
+      secret.should.deep.equal(vaultContent.secrets[0])
     })
 
     it('should return undefined if the secret does not exist', function () {
       // Given
-      const vault = new Vault(vaultSecrets)
+      const vault = new Vault(vaultContent)
 
       // When
       const secret = vault.getSecret('xxxx')
@@ -92,7 +92,7 @@ describe('Vault', function () {
     it('should delete a secret from the vault and notify the listeners', function () {
       // Given
       Date.now.returns(11111111111)
-      const vault = new Vault(JSON.parse(JSON.stringify(vaultSecrets)))
+      const vault = new Vault(JSON.parse(JSON.stringify(vaultContent)))
       vault.on('changed', (changedVault) => {
         // Then
         changedVault.getSecrets().should.deep.equal([{
@@ -131,7 +131,7 @@ describe('Vault', function () {
 
     it('should do nothing if the secret does not exist', function () {
       // Given
-      const vault = new Vault(JSON.parse(JSON.stringify(vaultSecrets)))
+      const vault = new Vault(JSON.parse(JSON.stringify(vaultContent)))
       vault.on('changed', (changedVault) => {
         // Then
         assert.fail('changed event should not be emitted')
@@ -171,7 +171,7 @@ describe('Vault', function () {
           updated: 11111111111
         }
       }
-      const vault = new Vault(JSON.parse(JSON.stringify(vaultSecrets)))
+      const vault = new Vault(JSON.parse(JSON.stringify(vaultContent)))
       vault.on('changed', (changedVault) => {
         // Then
         const lastSecret = changedVault.getSecrets()[2]
@@ -204,7 +204,7 @@ describe('Vault', function () {
           updated: 11111111111
         }
       }
-      const vault = new Vault(JSON.parse(JSON.stringify(vaultSecrets)))
+      const vault = new Vault(JSON.parse(JSON.stringify(vaultContent)))
       vault.on('changed', (changedVault) => {
         // Then
         const lastSecret = changedVault.getSecrets()[0]
@@ -229,7 +229,7 @@ describe('Vault', function () {
           enabled: false
         }
       }
-      const vault = new Vault(JSON.parse(JSON.stringify(vaultSecrets)))
+      const vault = new Vault(JSON.parse(JSON.stringify(vaultContent)))
 
       // When
       const finalVersion = vault.updateSecretVersion('secret1', '1', newVersion)
@@ -253,7 +253,7 @@ describe('Vault', function () {
           enabled: false
         }
       }
-      const vault = new Vault(vaultSecrets)
+      const vault = new Vault(vaultContent)
 
       // When
       try {
@@ -272,7 +272,7 @@ describe('Vault', function () {
           enabled: false
         }
       }
-      const vault = new Vault(vaultSecrets)
+      const vault = new Vault(vaultContent)
 
       // When
       try {
@@ -293,7 +293,7 @@ describe('Vault', function () {
         secret2: 'value2',
         secret3: 'value3'
       }
-      const vault = new Vault(JSON.parse(JSON.stringify(vaultSecrets)))
+      const vault = new Vault(JSON.parse(JSON.stringify(vaultContent)))
 
       // When
       vault.setSecrets(newSecrets)
@@ -310,6 +310,53 @@ describe('Vault', function () {
       newVaultSecrets[2].name.should.equal('secret3')
       newVaultSecrets[2].versions.should.have.lengthOf(1)
       newVaultSecrets[2].versions[0].value.should.equal('value3')
+    })
+  })
+
+  describe('getKeys', function () {
+    it('should return a deep clone of all the keys from the vault', function () {
+      // Given
+      const vault = new Vault(vaultContent)
+
+      // When
+      const keys = vault.getKeys()
+
+      // Then
+      keys.length.should.equal(2)
+      keys.should.not.equal(vaultContent.keys)
+      keys[0].should.not.equal(vaultContent.keys[0])
+      keys[1].should.not.equal(vaultContent.keys[1])
+      keys.should.deep.equal(vaultContent.keys)
+    })
+
+    it('should return a deep clone of a part of the keys from the vault', function () {
+      // Given
+      const vault = new Vault(vaultContent)
+
+      // When
+      const keys = vault.getKeys(1)
+
+      // Then
+      keys.length.should.equal(1)
+      keys.should.not.equal(vaultContent.keys)
+      keys[0].should.not.equal(vaultContent.keys[0])
+      keys.should.deep.equal(vaultContent.keys.slice(0, 1))
+      keys.nextIndex.should.equal(1)
+    })
+
+    it('should return a deep clone of a part of the keys from the vault starting from the given index', function () {
+      // Given
+      const vault = new Vault(vaultContent)
+
+      // When
+      const keys = vault.getKeys(1, 1)
+
+      // Then
+      keys.length.should.equal(1)
+      keys.should.not.equal(vaultContent.keys)
+      keys[0].should.not.equal(vaultContent.keys[1])
+      keys.should.deep.equal(vaultContent.keys.slice(1, 2))
+      should.not.exist(keys.nextIndex)
     })
   })
 })
